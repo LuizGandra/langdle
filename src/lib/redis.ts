@@ -30,8 +30,6 @@ export async function updateCurrentDay() {
 	const currentDay = day ? Number.parseInt(day) : -1
 	const newDay = currentDay + 1
 
-	console.log('updateCurrentDay -> newDay: ', newDay)
-
 	await redis.set('currentDay', newDay)
 	return newDay
 }
