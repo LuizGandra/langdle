@@ -1,0 +1,14 @@
+.correct {
+	border-color: green;
+	background-color: green;
+}
+
+.wrong-pos {
+	border-color: yellow;
+	background-color: yellow;
+}
+
+.wrong {
+	border-color: red;
+	background-color: red;
+}

@@ -1,3 +1,7 @@
+'use client'
+
+import { useGame } from '@/contexts/GameContext'
+
 type KeyboardRowProps = {
 	keys: Array<string>
 }
@@ -34,11 +38,15 @@ function KeyboardRow({ keys }: KeyboardRowProps) {
 	)
 }
 
+// TODO implement keyboard funcionality (create context?)
 function KeyboardKey({ keyValue }: KeyboardKeyProps) {
+	const { selectedCol, handleCellChange } = useGame()
+
 	return (
 		<button
 			type="button"
 			className="min-w-12 h-12 rounded-md border-4 border-zinc-800 text-xl text-center text-zinc-50 font-medium uppercase"
+			onClick={() => handleCellChange(selectedCol, keyValue)}
 		>
 			{keyValue}
 		</button>
