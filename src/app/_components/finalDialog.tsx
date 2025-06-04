@@ -33,7 +33,7 @@ export function FinalDialog({ word, meaning, example }: FinalDialogProps) {
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader className="mb-4">
 					<DialogTitle className="text-center leading-none">
-						{isWinner ? 'Congratulations!' : 'Better luck next time!'}
+						{isWinner ? 'Parabéns!' : 'Boa sorte na próxima!'}
 					</DialogTitle>
 				</DialogHeader>
 				<div className="space-y-4">
