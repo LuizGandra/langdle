@@ -18,18 +18,15 @@ type FinalDialogProps = {
 export function FinalDialog({ word, meaning, example }: FinalDialogProps) {
 	const { isFinished, isWinner } = useGame()
 
-	const [show, setShow] = useState(isFinished)
-
-	const handleShowChange = () => {
-		setShow((value) => !value)
-	}
+	const [show, setShow] = useState(false)
 
 	useEffect(() => {
-		if (isFinished) handleShowChange()
+		setShow(isFinished)
 	}, [isFinished])
 
+	// TODO fix dialog
 	return (
-		<Dialog open={show} onOpenChange={setShow}>
+		<Dialog open={show} onOpenChange={setShow} aria-describedby="Game result">
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader className="mb-4">
 					<DialogTitle className="text-center leading-none">

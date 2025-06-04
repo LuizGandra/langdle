@@ -1,5 +1,6 @@
 'use client'
 
+import { validateWord } from '@/app/actions/dictionaries/action'
 import React, { useCallback, useContext, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
@@ -24,18 +25,11 @@ type GameContextType = {
 type GameProviderProps = {
 	children: React.ReactNode
 	word: string
-	meaning: string
-	dictionary: Record<string, string> | null
 }
 
 const GameContext = React.createContext<GameContextType | null>(null)
 
-export function GameProvider({
-	children,
-	word,
-	meaning,
-	dictionary
-}: GameProviderProps) {
+export function GameProvider({ children, word }: GameProviderProps) {
 	const [board, setBoard] = useState<string[][]>(
 		Array(6)
 			.fill(null)
@@ -131,7 +125,8 @@ export function GameProvider({
 			} else if (key === 'Enter') {
 				const guess = board[currentRow].join('').toLowerCase()
 				if (guess.length !== 5) return
-				if (dictionary && !dictionary[guess]) {
+
+				if (!validateWord(guess)) {
 					toast.dismiss()
 					toast(
 						`"${guess.charAt(0).toUpperCase() + guess.slice(1)}" não é uma
@@ -144,18 +139,33 @@ export function GameProvider({
 					return
 				}
 
-				// TODO refactor all this logic!
 				const newBoardStatus = [...boardStatus]
-				board[currentRow].forEach((letter, index) => {
-					if (letter.toLowerCase() === word[index])
-						newBoardStatus[currentRow][index] = 'correct'
-					else if (word.includes(letter.toLowerCase()))
-						newBoardStatus[currentRow][index] = 'wrong-pos'
-					else newBoardStatus[currentRow][index] = 'wrong'
-				})
+				const guessLetters = board[currentRow].map((l) => l.toLowerCase())
+				const wordLetters = word.split('')
+				const status = Array(5).fill('')
+
+				const letterCount: Record<string, number> = {}
+				for (const l of wordLetters) letterCount[l] = (letterCount[l] || 0) + 1
+
+				for (let i = 0; i < 5; i++) {
+					if (guessLetters[i] === wordLetters[i]) {
+						status[i] = 'correct'
+						letterCount[guessLetters[i]]--
+					}
+				}
+
+				for (let i = 0; i < 5; i++) {
+					if (status[i]) continue
+
+					if (letterCount[guessLetters[i]] > 0) {
+						status[i] = 'wrong-pos'
+						letterCount[guessLetters[i]]--
+					} else status[i] = 'wrong'
+				}
+				newBoardStatus[currentRow] = status
 				setBoardStatus(newBoardStatus)
 
-				if (board[currentRow].join('').toLowerCase() === word) {
+				if (guess === word) {
 					setIsWinner(true)
 					setIsFinished(true)
 					return
@@ -175,8 +185,7 @@ export function GameProvider({
 			isFinished,
 			handleCellClick,
 			handleCellChange,
-			word,
-			dictionary
+			word
 		]
 	)
 
