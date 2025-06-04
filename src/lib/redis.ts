@@ -17,7 +17,9 @@ function getRedisClient() {
 
 export async function getCurrentDay() {
 	const redis = getRedisClient()
-	const day = await redis.get('currentDay')
+	// TODO change
+	// const day = await redis.get('currentDay')
+	const day = '8'
 	if (day) return Number.parseInt(day)
 
 	await redis.set('currentDay', 0)
