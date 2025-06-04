@@ -38,7 +38,6 @@ function KeyboardRow({ keys }: KeyboardRowProps) {
 	)
 }
 
-// TODO implement keyboard funcionality (create context?)
 function KeyboardKey({ keyValue }: KeyboardKeyProps) {
 	const { selectedCol, handleCellChange } = useGame()
 

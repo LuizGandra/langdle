@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useCallback, useContext, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 type GameContextType = {
 	board: string[][]
@@ -24,11 +25,17 @@ type GameProviderProps = {
 	children: React.ReactNode
 	word: string
 	meaning: string
+	dictionary: Record<string, string> | null
 }
 
 const GameContext = React.createContext<GameContextType | null>(null)
 
-export function GameProvider({ children, word, meaning }: GameProviderProps) {
+export function GameProvider({
+	children,
+	word,
+	meaning,
+	dictionary
+}: GameProviderProps) {
 	const [board, setBoard] = useState<string[][]>(
 		Array(6)
 			.fill(null)
@@ -122,7 +129,20 @@ export function GameProvider({ children, word, meaning }: GameProviderProps) {
 					)
 				)
 			} else if (key === 'Enter') {
-				if (board[currentRow].some((cell) => cell === '')) return
+				const guess = board[currentRow].join('').toLowerCase()
+				if (guess.length !== 5) return
+				if (dictionary && !dictionary[guess]) {
+					toast.dismiss()
+					toast(
+						`"${guess.charAt(0).toUpperCase() + guess.slice(1)}" não é uma
+								palavra válida.`,
+						{
+							position: 'top-center',
+							duration: 5000
+						}
+					)
+					return
+				}
 
 				// TODO refactor all this logic!
 				const newBoardStatus = [...boardStatus]
@@ -155,7 +175,8 @@ export function GameProvider({ children, word, meaning }: GameProviderProps) {
 			isFinished,
 			handleCellClick,
 			handleCellChange,
-			word
+			word,
+			dictionary
 		]
 	)
 
