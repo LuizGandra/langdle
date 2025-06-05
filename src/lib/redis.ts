@@ -5,7 +5,7 @@ let redisClient: ReturnType<typeof createClient> | null = null
 function getRedisClient() {
 	if (!redisClient) {
 		redisClient = createClient({
-			url: process.env.REDIS_URL || 'redis://localhost:6379'
+			url: process.env.REDIS_REDIS_URL || 'redis://localhost:6379'
 		})
 		redisClient.connect().catch((error) => {
 			console.error('Redis connection error:', error)
@@ -17,9 +17,7 @@ function getRedisClient() {
 
 export async function getCurrentDay() {
 	const redis = getRedisClient()
-	// TODO change
-	// const day = await redis.get('currentDay')
-	const day = '8'
+	const day = await redis.get('currentDay')
 	if (day) return Number.parseInt(day)
 
 	await redis.set('currentDay', 0)
