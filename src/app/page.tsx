@@ -25,7 +25,7 @@ export default async function Page() {
 					</header>
 					<main className="space-y-6">
 						<p className="text-2xl text-zinc-50 font-medium leading-none">
-							Inglês
+							Inglês - Dia {day + 1}
 						</p>
 						<GameBoard />
 						<Keyboard />
