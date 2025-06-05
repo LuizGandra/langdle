@@ -18,7 +18,7 @@ export default async function Page() {
 	return (
 		<GameProvider word={word}>
 			<KeyboardListener>
-				<div className="min-h-dvh space-y-6 bg-background text-center">
+				<div className="min-h-dvh space-y-6 bg-background text-center relative">
 					<header className="w-full py-6 border-b-2">
 						<Image
 							src="/assets/logo.svg"
@@ -35,6 +35,9 @@ export default async function Page() {
 						<GameBoard />
 						<Keyboard />
 					</main>
+					<footer className="w-full pt-6 border-t-2 text-sm font-medium leading-none absolute bottom-6 left-1/2 -translate-x-1/2">
+						Created by Luiz Gandra
+					</footer>
 				</div>
 				<FinalDialog word={word} meaning={meaning} example={example} />
 				<Toaster />

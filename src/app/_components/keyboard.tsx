@@ -67,7 +67,7 @@ function KeyboardKey({ keyValue, className }: KeyboardKeyProps) {
 		<button
 			type="button"
 			className={cn(
-				'min-w-12 h-12 rounded-md border-4 border-zinc-800 text-xl text-center text-zinc-50 font-medium uppercase',
+				'min-w-12 h-12 bg-default rounded-md bg-empty border-4 border-empty text-xl text-center font-medium uppercase',
 				className
 			)}
 			onClick={() => handleCellChange(selectedCol, keyValue)}
