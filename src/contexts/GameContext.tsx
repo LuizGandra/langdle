@@ -98,7 +98,7 @@ export function GameProvider({ children, word }: GameProviderProps) {
 	)
 
 	const handleKeyDown = useCallback(
-		(key: string, colIndex: number) => {
+		async (key: string, colIndex: number) => {
 			if (isFinished) return
 
 			if (/^[a-zA-Z]$/.test(key)) {
@@ -126,7 +126,8 @@ export function GameProvider({ children, word }: GameProviderProps) {
 				const guess = board[currentRow].join('').toLowerCase()
 				if (guess.length !== 5) return
 
-				if (!validateWord(guess)) {
+				const isWordValid = await validateWord(guess)
+				if (!isWordValid) {
 					toast.dismiss()
 					toast(
 						`"${guess.charAt(0).toUpperCase() + guess.slice(1)}" não é uma

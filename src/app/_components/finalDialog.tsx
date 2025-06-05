@@ -25,6 +25,7 @@ export function FinalDialog({ word, meaning, example }: FinalDialogProps) {
 	}, [isFinished])
 
 	// TODO fix dialog
+	// TODO dictionary checking is not working anymore!
 	return (
 		<Dialog open={show} onOpenChange={setShow} aria-describedby="Game result">
 			<DialogContent className="sm:max-w-[425px]">
