@@ -4,6 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+	--color-correct: var(--correct);
+	--color-wrong-pos: var(--wrong-pos);
+	--color-wrong: var(--wrong);
+	--color-empty: var(--empty);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-poppins);
@@ -43,9 +47,13 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
+	--radius: 0.625rem;
+	--correct: oklch(0.5347 0.094 154.36);
+	--wrong-pos: oklch(0.6567 0.089 90.37);
+	--wrong: oklch(0.1778 0.0227 296.54);
+	--empty: oklch(0.2168 0.0295 296.1);
+  --background: oklch(0.3003 0.0359 288.62);
+  --foreground: oklch(0.9633 0.0067 295.45);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
@@ -59,7 +67,7 @@
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
+  --border: oklch(0.3318 0.0351 288.92);
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.705 0.015 286.067);
   --chart-1: oklch(0.646 0.222 41.116);

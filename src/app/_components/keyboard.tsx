@@ -1,6 +1,7 @@
 'use client'
 
 import { useGame } from '@/contexts/GameContext'
+import { cn } from '@/lib/utils'
 
 type KeyboardRowProps = {
 	keys: Array<string>
@@ -8,6 +9,7 @@ type KeyboardRowProps = {
 
 type KeyboardKeyProps = {
 	keyValue: string
+	className: string
 }
 
 const keysMap = [
@@ -29,22 +31,45 @@ export function Keyboard() {
 }
 
 function KeyboardRow({ keys }: KeyboardRowProps) {
+	const { board, boardStatus } = useGame()
+
 	return (
 		<div className="space-x-2">
-			{keys?.map((key) => (
-				<KeyboardKey key={key} keyValue={key} />
-			))}
+			{keys?.map((key) => {
+				const flatBoard = board.flat()
+				const flatStatus = boardStatus.flat()
+
+				const keyPositions = flatBoard
+					.map((cell, i) => (cell === key ? i : -1))
+					.filter((i) => i !== -1)
+
+				const statuses = keyPositions.map((i) => flatStatus[i])
+
+				let keyColor = ''
+				if (statuses.includes('correct')) {
+					keyColor = 'bg-correct border-correct'
+				} else if (statuses.includes('wrong-pos')) {
+					keyColor = 'bg-wrong-pos border-wrong-pos'
+				} else if (statuses.includes('wrong')) {
+					keyColor = 'bg-wrong border-wrong'
+				}
+
+				return <KeyboardKey key={key} keyValue={key} className={keyColor} />
+			})}
 		</div>
 	)
 }
 
-function KeyboardKey({ keyValue }: KeyboardKeyProps) {
+function KeyboardKey({ keyValue, className }: KeyboardKeyProps) {
 	const { selectedCol, handleCellChange } = useGame()
 
 	return (
 		<button
 			type="button"
-			className="min-w-12 h-12 rounded-md border-4 border-zinc-800 text-xl text-center text-zinc-50 font-medium uppercase"
+			className={cn(
+				'min-w-12 h-12 rounded-md border-4 border-zinc-800 text-xl text-center text-zinc-50 font-medium uppercase',
+				className
+			)}
 			onClick={() => handleCellChange(selectedCol, keyValue)}
 		>
 			{keyValue}

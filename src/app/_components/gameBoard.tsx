@@ -31,18 +31,18 @@ export function GameBoard() {
 								key={`bc-${rowIndex}-${colIndex}`}
 								type="text"
 								className={cn(
-									'w-16 h-16 rounded-md border-4 border-zinc-800 text-4xl text-center text-zinc-50 font-medium uppercase caret-transparent focus:outline-none transition-all duration-25',
+									'w-16 h-16 rounded-md border-4 border-empty text-4xl text-center font-medium uppercase caret-transparent focus:outline-none transition-all duration-25',
 									rowIndex === currentRow ? 'cursor-pointer' : 'cursor-default',
-									rowIndex === currentRow ? 'bg-transparent' : 'bg-zinc-800',
+									rowIndex === currentRow ? 'bg-transparent' : 'bg-empty',
 									rowIndex === currentRow &&
 										colIndex === selectedCol &&
 										'border-b-10',
 									boardStatus[rowIndex][colIndex] === 'correct' &&
-										'bg-green-500 border-green-500',
+										'bg-correct border-correct',
 									boardStatus[rowIndex][colIndex] === 'wrong-pos' &&
-										'bg-yellow-500 border-yellow-500',
+										'bg-wrong-pos border-wrong-pos',
 									boardStatus[rowIndex][colIndex] === 'wrong' &&
-										'bg-red-500 border-red-500'
+										'bg-wrong border-wrong'
 								)}
 								value={cell}
 								onChange={(e) => handleCellChange(colIndex, e.target.value)}
